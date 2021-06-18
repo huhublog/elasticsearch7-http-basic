@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 public class LoggerUtils {
 
     public static void logRequest(final RestRequest request, Class<?> klass) {
-        String addr = getAddress(request).getHostAddress();
+        String addr = getAddress(request).getAddress().getHostAddress();
         String t = "Authorization:{}, type: {}, Host:{}, Path:{}, {}:{}, Request-IP:{}, " +
                 "Client-IP:{}, X-Client-IP{}";
         Logger log = LogManager.getLogger(klass);
@@ -26,7 +26,7 @@ public class LoggerUtils {
     }
 
     public static void logUnAuthorizedRequest(final RestRequest request, Class<?> klass) {
-        String addr = getAddress(request).getHostAddress();
+        String addr = getAddress(request).getAddress().getHostAddress();
         String t = "UNAUTHORIZED type:{}, address:{}, path:{}, request:{}, content:{}";
         Logger log = LogManager.getLogger(klass);
 
@@ -35,8 +35,8 @@ public class LoggerUtils {
                 request.content().utf8ToString());
     }
 
-    private static InetAddress getAddress(RestRequest request) {
-        return ((InetSocketAddress) request.getRemoteAddress()).getAddress();
+    private static InetSocketAddress getAddress(RestRequest request) {
+        return request.getHttpChannel().getRemoteAddress();
     }
     
     public static void log (String msg) {

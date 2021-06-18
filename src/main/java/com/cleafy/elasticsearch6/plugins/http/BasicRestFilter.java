@@ -61,7 +61,7 @@ public class BasicRestFilter {
 
     private boolean checkAndAuthenticateRequest(RestRequest request, RestChannel channel, NodeClient client) throws Exception {
         ElasticsearchException forbiddenException = new TransportException("Forbidden");
-        String ip = this.getAddress(request).getHostAddress();
+        String ip = getAddress(request).getAddress().getHostAddress();
         try {
         	//ip white list
         	if ( this.ipwhitelist.size() > 0) {
@@ -85,9 +85,9 @@ public class BasicRestFilter {
         LoggerUtils.log("http basic auth is not successed! ip = " + ip);
         return false;
     }
-    
-    
-    private static InetAddress getAddress(RestRequest request) {
-        return ((InetSocketAddress) request.getRemoteAddress()).getAddress();
+
+
+    private static InetSocketAddress getAddress(RestRequest request) {
+        return request.getHttpChannel().getRemoteAddress();
     }
 }
