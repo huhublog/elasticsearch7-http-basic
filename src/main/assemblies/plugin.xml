@@ -19,7 +19,7 @@
             <useProjectArtifact>true</useProjectArtifact>
             <useTransitiveFiltering>true</useTransitiveFiltering>
             <includes>
-                <include>com.cleafy.elasticsearch:elasticsearch6-http-basic</include>
+                <include>com.huhu.elasticsearch:elasticsearch7-http-basic</include>
             </includes>
         </dependencySet>
     </dependencySets>
